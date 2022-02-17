@@ -19,10 +19,10 @@ var (
 )
 
 func init() {
-	RootCmd.AddCommand(statusCmd)
+	rootCmd.AddCommand(statusCmd)
 
 }
 
 func statusExecute(cmd *cobra.Command, args []string) {
-	fmt.Println("No idea what you are talking about :-)")
+	fmt.Println("what is STATUS,  no idea :-)")
 }
