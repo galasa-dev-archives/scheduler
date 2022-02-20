@@ -1,0 +1,42 @@
+#
+# Copyright contributors to the Galasa project 
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduler-api
+  labels:
+    app: scheduler-api
+#
+#
+#
+spec:
+#
+#
+#
+  replicas: 1
+  revisionHistoryLimit: 0
+#
+#
+#
+  selector:
+    matchLabels:
+      app: scheduler-api
+  template:
+    metadata:
+      name: scheduler-api
+      labels:
+        app: scheduler-api
+#
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+#
+      containers:
+      - name: api
+        image: {{ .Values.registry }}/galasadev/galasa-scheduler-api-amd64:{{ .Values.branch }}
+        imagePullPolicy: Always
+#
+        ports:
+        - containerPort: 9080
+          name: http

@@ -1,0 +1,27 @@
+#
+# Copyright contributors to the Galasa project 
+#
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: scheduler-ingress
+#
+#
+#
+
+spec:
+  ingressClassName: nginx
+#
+#
+#
+  rules:
+  - host: "api.scheduler.{{ .Values.branch }}.galasadev.cicsk8s.hursley.ibm.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: scheduler-api
+            port:
+              number: 9080
