@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "status")
@@ -27,6 +28,9 @@ public class StatusEntity implements Serializable {
 	@Column(name = "timestamp")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
+	
+	@Version()
+	private long version;
 	
 	public StatusEntity() {
 	}
