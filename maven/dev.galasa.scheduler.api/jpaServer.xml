@@ -1,0 +1,15 @@
+<server description="Galasa Scheduler API">
+
+	<library id="postgresql-library">
+		<fileset dir="postgresql" id="postgresqlDileset" includes="postgresql.jar"/>
+	</library>
+
+	<jdbcDriver id="postgresql-driver" javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="postgresql-library"/>
+
+
+	<dataSource id="schedulerSource" jdbcDriverRef="postgresql-driver" jndiName="jdbc/scheduler" transactional="true" type="javax.sql.ConnectionPoolDataSource">
+
+		<properties databaseName="postgres" password="passw0rd" portNumber="5432" serverName="scheduler-db" user="postgres"/>
+	</dataSource>
+
+</server>

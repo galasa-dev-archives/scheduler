@@ -4,9 +4,9 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+
+	"galasa.dev/scheduler/pkg/status"
 )
 var (
     statusCmd = &cobra.Command{
@@ -24,5 +24,5 @@ func init() {
 }
 
 func statusExecute(cmd *cobra.Command, args []string) {
-	fmt.Println("what is STATUS,  no idea :-)")
+	status.StatusReport()
 }

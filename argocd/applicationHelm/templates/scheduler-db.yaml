@@ -1,0 +1,65 @@
+#
+# Copyright contributors to the Galasa project 
+#
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: scheduler-db
+  labels:
+    app: scheduler-db
+#
+#
+#
+spec:
+#
+#
+#
+  replicas: 1
+  revisionHistoryLimit: 0
+#
+#
+#
+  serviceName: "scheduler-db"
+#
+#
+#
+  selector:
+    matchLabels:
+      app: scheduler-db
+  template:
+    metadata:
+      name: scheduler-db
+      labels:
+        app: scheduler-db
+#
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+#
+      containers:
+      - name: postgresql
+        image: {{ .Values.registry }}/dockerhub/library/postgres:14.2
+#
+        env:
+        - name: POSTGRES_PASSWORD
+          value: passw0rd
+        - name: PGDATA
+          value: /data/pgdata
+#
+        ports:
+        - containerPort: 5432
+          name: db
+#
+        volumeMounts:
+        - name: data
+          mountPath: /data
+
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: 10Gi

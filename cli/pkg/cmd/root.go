@@ -18,8 +18,14 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	reportVersion()
+
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func reportVersion() {
+	fmt.Printf("Galasa Scheduler - version %s\n\n", rootCmd.Version)
 }

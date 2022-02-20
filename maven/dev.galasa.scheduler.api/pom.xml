@@ -6,7 +6,6 @@
 
 	<artifactId>dev.galasa.scheduler.api</artifactId>
 	<packaging>war</packaging>
-	<version>0.21.0</version>
 
 	<parent>
 		<groupId>dev.galasa</groupId>
@@ -26,6 +25,16 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.scheduler.jpa</artifactId>
+			<version>0.21.0</version>
+		</dependency>
+
+
+
+
+
 		<!-- Provided dependencies -->
 		<dependency>
 			<groupId>jakarta.platform</groupId>
@@ -91,6 +100,33 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<artifactItems>
+						<artifactItem>
+							<groupId>org.postgresql</groupId>
+							<artifactId>postgresql</artifactId>
+							<version>42.3.3</version>
+							<type>jar</type>
+							<overWrite>false</overWrite>
+							<outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/guideServer/jdbc</outputDirectory>
+							<destFileName>postgresql.jar</destFileName>
+						</artifactItem>
+					</artifactItems>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

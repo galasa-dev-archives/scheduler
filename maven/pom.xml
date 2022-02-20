@@ -31,5 +31,7 @@
 
 	<modules>
 		<module>dev.galasa.scheduler.api</module>
+		<module>dev.galasa.scheduler.jpa</module>
+		<module>dev.galasa.scheduler</module>
 	</modules>
 </project>

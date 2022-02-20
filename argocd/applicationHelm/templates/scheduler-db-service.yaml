@@ -1,0 +1,21 @@
+#
+# Copyright contributors to the Galasa project 
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: scheduler-db
+#
+#
+#
+spec:
+  type: NodePort
+#
+  selector:
+    app: scheduler-db
+#
+  ports:
+  - name: scheduler-db
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
