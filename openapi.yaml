@@ -22,7 +22,7 @@ paths:
   /status:
     get:
       operationId: getStatus
-      summary: Get CPS Namespaces
+      summary: Get Scheduler status
       tags: 
       - Status
       responses:
@@ -32,6 +32,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
+##################################################################################
+# App maintenance
+##################################################################################
+  /app:
+    get:
+      operationId: getApps
+      summary: Get all Apps
+      tags: 
+      - App
+      responses:
+        '200':
+          description: Apps retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+  /app/{app}:
+    get:
+      operationId: getApp
+      summary: Get App
+      tags: 
+      - App
+      parameters:
+        - name: app
+          in: path
+          description: Application name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: App retrived
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    post:
+      operationId: newApp
+      summary: Create App
+      tags: 
+      - App
+      parameters:
+        - name: app
+          in: path
+          description: Application name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: App created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    delete:
+      operationId: deleteApp
+      summary: Delete App
+      tags: 
+      - App
+      parameters:
+        - name: app
+          in: path
+          description: Application name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: App deleted
 ##################################################################################
 # Components
 ##################################################################################
@@ -43,3 +113,13 @@ components:
           type: string
         apiReport:
           type: string
+    App:
+      properties:
+        name:
+          type: string
+    Apps:
+      properties:
+        apps:
+          type: array
+          items: 
+            $ref: '#/components/schemas/App'

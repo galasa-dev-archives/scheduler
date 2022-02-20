@@ -8,10 +8,11 @@ import (
 	"fmt"
 
 	openapiclient "galasa.dev/scheduler/pkg/openapi"
+	"galasa.dev/scheduler/pkg/util"
 )
 
 func StatusReport() {
-    configuration := openapiclient.NewConfiguration()
+    configuration := util.ContextConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
     resp, r, err := apiClient.StatusApi.GetStatus(context.Background()).Execute()
     if err != nil {

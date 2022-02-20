@@ -19,7 +19,7 @@ var (
 )
 
 func init() {
-	appListCmd.AddCommand(appCmd)
+	appCmd.AddCommand(appListCmd)
 }
 
 func appListExecute(cmd *cobra.Command, args []string) {
