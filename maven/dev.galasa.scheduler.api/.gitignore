@@ -1,0 +1,4 @@
+.openapi-generator/
+README.md
+.openapi-generator-ignore
+.DS_Store

@@ -1,0 +1,29 @@
+#
+# Copyright contributors to the Galasa project 
+#
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: maven-scheduler-repo
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+#
+spec:
+  ingressClassName: nginx
+#
+  tls:
+  - hosts:
+    - galasadev-cicsk8s.hursley.ibm.com
+    secretName: galasadev-cert
+#
+  rules:
+  - host: galasadev-cicsk8s.hursley.ibm.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: maven-scheduler-repo
+            port:
+              number: 80
+        path: /{{ .Values.branch}}/maven/scheduler
+        pathType: Prefix

@@ -1,0 +1,16 @@
+#
+# Copyright contributors to the Galasa project 
+#
+ARG dockerRepository
+FROM ${dockerRepository}/library/alpine:3.14
+
+ARG platform
+
+RUN addgroup galasa && \ 
+    adduser -D -G galasa -h /galasa -s /bin/sh galasa 
+
+COPY bin/galasasch-${platform} /bin/galasasch
+RUN chmod +x /bin/galasasch
+
+WORKDIR /galasa
+USER galasa

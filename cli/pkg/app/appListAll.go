@@ -7,6 +7,6 @@ import (
 	"fmt"
 )
 
-func GetAllApps() {
+func AppListAll() {
 	fmt.Println("what are APPs,  no idea :-)")
 }

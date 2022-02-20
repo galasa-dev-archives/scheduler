@@ -14,7 +14,7 @@ var rootCmd = &cobra.Command{
 	Use:   "galasasch",
 	Short: "Creating and maintaining Galasa test schdules",
 	Long:  "",
-	Version: "0.0.1",
+	Version: "unknowncliversion-unknowngithash",
 }
 
 func Execute() {

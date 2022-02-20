@@ -1,0 +1,45 @@
+#
+# Copyright contributors to the Galasa project 
+#
+openapi: 3.0.3
+info:
+  title: Galasa Scheduler API
+  version: 0.21.0
+
+servers:
+  - url: 'http://{server}:{port}'
+    variables:
+      server:
+        default: localhost
+      port:
+        default: "9080"
+  - url: '/'
+
+paths:
+##################################################################################
+# Scheduler Status Report
+##################################################################################
+  /status:
+    get:
+      operationId: getStatus
+      summary: Get CPS Namespaces
+      tags: 
+      - Status
+      responses:
+        '200':
+          description: Report on the status of the scheduler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+##################################################################################
+# Components
+##################################################################################
+components:
+  schemas:
+    Status:
+      properties:
+        schedulerReport:
+          type: string
+        apiReport:
+          type: string

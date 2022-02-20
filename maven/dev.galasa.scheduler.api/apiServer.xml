@@ -1,0 +1,8 @@
+<server description="Galasa Scheduler API">
+  <featureManager>
+      <feature>jaxrs-2.1</feature>
+  </featureManager>
+  
+  <webApplication location="dev.galasa.scheduler.api.war" contextRoot="/"/>
+
+</server>
