@@ -22,18 +22,15 @@ public class Heartbeat implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("ee1k");
 		try {
 			EntityManager em = this.scheduler.getEntityManager();
 			em.getTransaction().begin();
-			System.out.println("ee2k");
 
 			StatusEntity statusRecord = em.find(StatusEntity.class, "scheduler");
 			if (statusRecord == null) {
 				statusRecord = new StatusEntity();
 				statusRecord.setId("scheduler");
 			}
-			System.out.println("ee3k");
 			
 			statusRecord.setSummary("Idle");
 			statusRecord.setTimestamp(Instant.now());
