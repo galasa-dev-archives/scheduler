@@ -55,12 +55,12 @@ paths:
       tags: 
       - App
       parameters:
-        - name: app
-          in: path
-          description: Application name
-          required: true
-          schema:
-            type: string
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: App retrived
@@ -74,12 +74,12 @@ paths:
       tags: 
       - App
       parameters:
-        - name: app
-          in: path
-          description: Application name
-          required: true
-          schema:
-            type: string
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: App created
@@ -93,15 +93,110 @@ paths:
       tags: 
       - App
       parameters:
-        - name: app
-          in: path
-          description: Application name
-          required: true
-          schema:
-            type: string
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: App deleted
+##################################################################################
+# Level maintenance
+##################################################################################
+  /app/{app}/level:
+    get:
+      operationId: getLevels
+      summary: Get all Levels for an App
+      tags: 
+      - Level
+      parameters:
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Levels retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Levels'
+  /app/{app}/level/{level}:
+    get:
+      operationId: getLevel
+      summary: Get Level
+      tags: 
+      - Level
+      parameters:
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
+      - name: level
+        in: path
+        description: Level name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Level retrived
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'
+    post:
+      operationId: newLevel
+      summary: Create Level
+      tags: 
+      - Level
+      parameters:
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
+      - name: level
+        in: path
+        description: Level name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Level created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'
+    delete:
+      operationId: deleteLevel
+      summary: Delete Level
+      tags: 
+      - Level
+      parameters:
+      - name: app
+        in: path
+        description: Application name
+        required: true
+        schema:
+          type: string
+      - name: level
+        in: path
+        description: Level name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Level deleted
 ##################################################################################
 # Components
 ##################################################################################
@@ -113,9 +208,14 @@ components:
           type: string
         apiReport:
           type: string
+#
+# App
+#
     App:
       properties:
         name:
+          type: string
+        configuration:
           type: string
     Apps:
       properties:
@@ -123,3 +223,20 @@ components:
           type: array
           items: 
             $ref: '#/components/schemas/App'
+#
+# Level
+#
+    Level:
+      properties:
+        name:
+          type: string
+        app:
+          type: string
+        configuration:
+          type: string
+    Levels:
+      properties:
+        apps:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Level'
