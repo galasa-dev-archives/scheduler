@@ -31,10 +31,6 @@
 			<version>0.21.0</version>
 		</dependency>
 
-
-
-
-
 		<!-- Provided dependencies -->
 		<dependency>
 			<groupId>jakarta.platform</groupId>
@@ -50,15 +46,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-annotations</artifactId>
-			<version>1.6.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.13.1</version>
+			<groupId>org.eclipse.microprofile.graphql</groupId>
+			<artifactId>microprofile-graphql-api</artifactId>
+			<version>1.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
@@ -79,27 +69,6 @@
 					<serverName>guideServer</serverName>
 					<configDirectory>${project.basedir}/src/main/liberty/actualConfig</configDirectory>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.openapitools</groupId>
-				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.4.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<inputSpec>${project.basedir}/../../openapi.yaml</inputSpec>
-							<generatorName>jaxrs-spec</generatorName>
-							<output>${project.basedir}/</output>
-							<additionalProperties>interfaceOnly=true,generateBuilders=false,implFolder=src/main/java,apiPackage=dev.galasa.scheduler.api.openapi,modelPackage=dev.galasa.scheduler.api.openapi.model,generatePom=false,dateLibrary=java8,library=openliberty</additionalProperties>
-							<configOptions>
-								<sourceFolder>src/main/java</sourceFolder>
-							</configOptions>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

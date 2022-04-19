@@ -1,7 +1,8 @@
 package util
 
 import (
-	"context"
+	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -9,26 +10,40 @@ import (
 
 	yaml "gopkg.in/yaml.v3"
 
-	openapiclient "galasa.dev/scheduler/pkg/openapi"
+	"galasa.dev/scheduler/pkg/model"
 	schyaml "galasa.dev/scheduler/pkg/scheduleryaml"
 )
 
 
 func Login(url string) {
 
-    configuration := openapiclient.NewConfiguration()
-	configuration.Servers = openapiclient.ServerConfigurations{
-		{
-			URL: url,
-			Description: "No description provided",
-		},
-	}
+    configuration := GetApiConfiguration()
 
-    apiClient := openapiclient.NewAPIClient(configuration)
-    _, _, err := apiClient.StatusApi.GetStatus(context.Background()).Execute()
+	newUrl := url + "/graphql"
+
+	var qlrequest model.GraphQlRequest
+	qlrequest.Query = "query { serverStatus { apiReport } }"
+
+	jsonBytes, err := json.Marshal(qlrequest)
     if err != nil {
         panic(err)
     }
+
+	resp, err := configuration.Client.Post(newUrl, "application/json", bytes.NewBuffer(jsonBytes))
+    if err != nil {
+        panic(err)
+    }
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        panic(err)
+    }
+
+	var statusResponse model.ServerStatusResponse
+
+	json.Unmarshal(body, &statusResponse)
+
+	fmt.Printf("resp=%v\n", statusResponse.Data.ServerStatus.ApiReport)
 
 	fmt.Println("Successfully logged onto api server");
 
@@ -60,7 +75,7 @@ func Login(url string) {
 	}
 
 
-	configYaml.Url = url
+	configYaml.Url = newUrl
 
     data, err := yaml.Marshal(&configYaml)
 	if err != nil {

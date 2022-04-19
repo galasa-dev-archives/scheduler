@@ -3,18 +3,26 @@ package util
 import (
 	"errors"
 	"io/ioutil"
+	"net/http"
 	"os"
 
 	yaml "gopkg.in/yaml.v3"
 
-	openapiclient "galasa.dev/scheduler/pkg/openapi"
 	schyaml "galasa.dev/scheduler/pkg/scheduleryaml"
 )
 
+type ApiConfiguration struct {
+	Client    http.Client;
+    BaseUrl   string;
+}
 
-func ContextConfiguration() *openapiclient.Configuration {
 
-	configuration := openapiclient.NewConfiguration()
+
+func GetApiConfiguration() ApiConfiguration {
+
+	var configuration ApiConfiguration
+
+	configuration.Client = http.Client{}
 
 	dirname, err := os.UserHomeDir()
     if err != nil {
@@ -34,12 +42,7 @@ func ContextConfiguration() *openapiclient.Configuration {
 		}
 
 		if configYaml.Url != "" {
-			configuration.Servers = openapiclient.ServerConfigurations{
-				{
-					URL: configYaml.Url,
-					Description: "No description provided",
-				},
-			}
+			configuration.BaseUrl = configYaml.Url
 		}
     } else if errors.Is(err, os.ErrNotExist) {
 	} else {

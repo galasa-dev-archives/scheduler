@@ -4,22 +4,40 @@
 package status
 
 import (
-	"context"
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 
-	openapiclient "galasa.dev/scheduler/pkg/openapi"
+	"galasa.dev/scheduler/pkg/model"
 	"galasa.dev/scheduler/pkg/util"
 )
 
 func StatusReport() {
-    configuration := util.ContextConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.StatusApi.GetStatus(context.Background()).Execute()
+    configuration := util.GetApiConfiguration()
+    
+	var qlrequest model.GraphQlRequest
+	qlrequest.Query = "query { serverStatus { apiReport schedulerReport } }"
+
+	jsonBytes, err := json.Marshal(qlrequest)
     if err != nil {
-        fmt.Printf("Error when calling `StatusApi.GetStatus``: %v\n", err)
-        fmt.Printf("Full HTTP response: %v\n", r)
+        panic(err)
     }
-    // response from `GetStatus`: Status
-	fmt.Printf("API Status      : %v\n", resp.GetApiReport());
-	fmt.Printf("Scheduler Status: %v\n", resp.GetSchedulerReport());
+
+	resp, err := configuration.Client.Post(configuration.BaseUrl, "application/json", bytes.NewBuffer(jsonBytes))
+    if err != nil {
+        panic(err)
+    }
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        panic(err)
+    }
+
+	var statusResponse model.ServerStatusResponse
+
+	json.Unmarshal(body, &statusResponse)
+    
+	fmt.Printf("API Status      : %v\n", statusResponse.Data.ServerStatus.ApiReport);
+	fmt.Printf("Scheduler Status: %v\n", statusResponse.Data.ServerStatus.SchedulerReport);
 }
