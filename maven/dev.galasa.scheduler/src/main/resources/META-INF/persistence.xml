@@ -8,6 +8,7 @@
 
      	<class>dev.galasa.scheduler.jpa.StatusEntity</class>
      	<class>dev.galasa.scheduler.jpa.AppEntity</class>
+     	<class>dev.galasa.scheduler.jpa.LevelEntity</class>
     
     
         <properties>
