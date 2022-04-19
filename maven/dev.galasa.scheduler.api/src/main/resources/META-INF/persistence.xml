@@ -8,6 +8,7 @@
         <jta-data-source>jdbc/scheduler</jta-data-source>
  
      	<class>dev.galasa.scheduler.jpa.StatusEntity</class>
+     	<class>dev.galasa.scheduler.jpa.LevelEntity</class>
      	<class>dev.galasa.scheduler.jpa.AppEntity</class>
  
         <properties>
