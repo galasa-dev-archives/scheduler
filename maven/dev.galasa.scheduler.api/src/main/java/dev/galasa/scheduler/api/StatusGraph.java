@@ -25,11 +25,17 @@ public class StatusGraph {
 		StatusEntity jpaStatus = null;
 		try {
 			jpaStatus = em.find(StatusEntity.class, "scheduler");
-			status.apiReport = "Ok";
-			status.schedulerReport = jpaStatus.getSummary();
+			if (jpaStatus == null) {
+				status.apiReport = "Ok";
+				status.schedulerReport ="Not started";
+			} else {
+				status.apiReport = "Ok";
+				status.schedulerReport = jpaStatus.getSummary();
+			}
 		} catch(Exception e) {
 			status.apiReport = "Database is not initialised";
 			status.schedulerReport ="Unknown";
+			e.printStackTrace();
 		}
 
 		return status;
