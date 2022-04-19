@@ -2,6 +2,7 @@ package model
 
 type ServerStatusResponse struct {
 	Data            ServerStatusData `json:"data"`
+	Errors        []GraphQlError     `json:"errors"`
 }
 
 type ServerStatusData struct {

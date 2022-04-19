@@ -37,6 +37,14 @@ func StatusReport() {
 	var statusResponse model.ServerStatusResponse
 
 	json.Unmarshal(body, &statusResponse)
+
+    if len(statusResponse.Errors) != 0 {
+        fmt.Println("Errors:-")
+        for _, error := range(statusResponse.Errors) {
+            fmt.Printf("  %v", error.Message)
+        }
+        panic("Access error")
+    }
     
 	fmt.Printf("API Status      : %v\n", statusResponse.Data.ServerStatus.ApiReport);
 	fmt.Printf("Scheduler Status: %v\n", statusResponse.Data.ServerStatus.SchedulerReport);
