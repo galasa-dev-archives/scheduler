@@ -34,7 +34,6 @@ public class AppGraph {
 		
 		App demo = new App();
 		demo.id = id;
-		demo.name = "Demo";
 		demo.configuration = "";
 		
 		return demo;
